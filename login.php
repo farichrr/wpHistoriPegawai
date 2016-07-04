@@ -39,7 +39,7 @@
                             type: \"success\"
                          },
                     function () {
-                        window.location.href = 'home_admin.php';
+                        window.location.href = 'admin_home.php';
                     });
                         </script>";
                 } elseif ($_SESSION['level'] > 1) {

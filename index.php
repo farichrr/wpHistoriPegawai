@@ -35,7 +35,7 @@
     </style>
 </head>
 
-<body>
+<body class="cyan">
 <div class="section"></div>
 <main>
     <center>
