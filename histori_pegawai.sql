@@ -26,6 +26,9 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `admin`
 --
 
+CREATE DATABASE histori_pegawai;
+USE histori_pegawai;
+
 CREATE TABLE `admin` (
   `user` varchar(30) DEFAULT NULL,
   `pass` varchar(100) DEFAULT NULL,
