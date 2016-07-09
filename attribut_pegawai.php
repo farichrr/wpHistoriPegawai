@@ -82,16 +82,160 @@ $(document).ready(function() {
         <div class="row">
             <ul class="collapsible" data-collapsible="expandable">
             <li>
-              <div class="collapsible-header"><i class="material-icons">face</i>Tipe Pegawai</div>
-              <div class="collapsible-body"><p>Menu untuk menambah tipe pegawai baru<br>
-                    <button type="button" class="btn modal-trigger" href="#modal1">Tambah</button>&nbsp;&nbsp;<button type="button" class="btn modal-trigger" href="#modal2">Lihat</button></p>
-                </div>
+        <div class="collapsible-header"><i class="material-icons">face</i>Tambah tipe data pegawai</div>
+        <div class="collapsible-body">
+            <div class="container">
+                <p>Menu menambah tipe pegawai baru.</p>
+        <form action="tambah_tipepegawai.php" method="post">
+            <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">note_add</i>
+                        <input name="tipe_pegawai" id="tipe_pegawai" type="text" class="validate" required >
+                        <label for="tipe_pegawai">Tipe Pegawai</label>
+                    </div>
                 
+            <div class="modal-footer">
+                    <button type="submit" class="waves-effect waves-green right btn"><i class="material-icons right">add</i>Tambah</button>
+                </div>
+                </div>
+            </form>
+            
+        
+        <h4>Data Tipe Pegawai</h4>
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="col s12">
+                        <table class="highlight centered">
+        <thead>
+          <tr>
+              <th data-field="kode_tipepegawai">Kode Pegawai</th>
+              <th data-field="keterangan">Keterangan Unit</th>
+          </tr>
+        </thead>
+        <tbody>
+            <?php
+                require_once "connect.php";
+                $sql = "SELECT * FROM tipe_pegawai";
+                $result = mysqli_query($db, $sql);
+            if (mysqli_num_rows($result) > 0) {
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>
+                    <td>".@$row['kode_tipepegawai']."</td>  
+                    <td>".@$row['keterangan']."</td>
+                    </tr>";
+                    }
+                } else {
+                    echo "Data Kosong";
+            } ?>
+          
+        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+        </div>
+                
+        
+            </div>
+        </div>        
             </li>
             <li>
               <div class="collapsible-header"><i class="material-icons">group_add</i>Unit Pegawai</div>
-              <div class="collapsible-body"><p>Menu untuk menambah unit baru<br>
-                   <button type="button" class="btn modal-trigger" href="#modal3">Tambah</button>&nbsp;&nbsp;<button type="button" class="btn modal-trigger" href="#modal4">Lihat</button></p></div>
+              <div class="collapsible-body">
+                  <div class="container">
+                <p>Menu menambah unit pegawai baru.</p>
+        <form class="col s12" method="post" action="tambah_unitpegawai.php">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">store</i>
+                        <input name="kode_unit" id="kode_unit" type="text" class="validate" required >
+                        <label for="kode_unit">Kode Unit</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">note</i>
+                        <input name="unit_pegawai" id="unit_pegawai" type="text" class="validate" required >
+                        <label for="unit_pegawai">Unit Pegawai</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="waves-effect waves-green right btn"><i class="material-icons right">add</i>Tambah</button>
+                </div>
+            </form>
+                      
+        <h4>Data Unit Pegawai</h4>
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="col s12">
+                        <table class="highlight centered">
+        <thead>
+          <tr>
+              <th data-field="kode_unit">Kode Unit</th>
+              <th data-field="keterangan">Keterangan Unit</th>
+          </tr>
+        </thead>
+        <tbody>
+            <?php
+                require_once "connect.php";
+                $rec_limit = 10;
+                $sql = "SELECT count(kode_unit) FROM unit ";
+                $retval = mysql_query( $sql, $db );
+         
+         if(! $retval ) {
+            die('Could not get data: ' . mysql_error());
+         }
+         $row = mysql_fetch_array($retval, MYSQL_NUM );
+         $rec_count = $row[0];
+         
+         if( isset($_GET{'page'} ) ) {
+            $page = $_GET{'page'} + 1;
+            $offset = $rec_limit * $page ;
+         }else {
+            $page = 0;
+            $offset = 0;
+         }
+         
+         $left_rec = $rec_count - ($page * $rec_limit);
+         $sql = "SELECT * ". 
+            "FROM unit ".
+            "LIMIT $offset, $rec_limit";
+            
+         $retval = mysql_query( $sql, $conn );
+         
+         if(! $retval ) {
+            die('Could not get data: ' . mysql_error());
+         }
+         
+         while($row = mysql_fetch_array($retval, MYSQL_ASSOC)) {
+            echo "Kode Unit :{$row['kode_unit']}  <br> ".
+                  "EMP SALARY : {$row['keterangan']} <br> ".
+               "--------------------------------<br>";
+         }
+         
+         if( $page > 0 ) {
+            $last = $page - 2;
+            echo "<a href = \"$_PHP_SELF?page = $last\">Last 10 Records</a> |";
+            echo "<a href = \"$_PHP_SELF?page = $page\">Next 10 Records</a>";
+         }else if( $page == 0 ) {
+            echo "<a href = \"$_PHP_SELF?page = $page\">Next 10 Records</a>";
+         }else if( $left_rec < $rec_limit ) {
+            $last = $page - 2;
+            echo "<a href = \"$_PHP_SELF?page = $last\">Last 10 Records</a>";
+         }
+         
+         mysql_close($conn);
+      ?>
+          
+        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+        </div>
+                  </div>
+                </div>
             </li>
             <li>
               <div class="collapsible-header"><i class="material-icons">whatshot</i>Status Pegawai</div>
