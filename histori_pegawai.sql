@@ -19,9 +19,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `histori_pegawai`
 --
-
 -- --------------------------------------------------------
-
+CREATE  DATABASE histori_pegawai;
+USE histori_pegawai;
 --
 -- Struktur dari tabel `admin`
 --
