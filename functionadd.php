@@ -44,3 +44,47 @@ function IdStatusPegawai($num) {
 }
 echo IdStatusPegawai(autoIdStatus());
 ?>
+
+<?php
+function autoIdJabatan()
+{
+    global $db;
+    $querycount="SELECT count(kode_jabatan) as LastID FROM jabatan";
+    $result=$db->query($querycount) or die($db->error());
+    $row=$result->fetch_assoc();
+    return $row['LastID'];
+}
+
+function IdJabatan($num) {
+    $num=$num+1; switch (strlen($num))
+    {
+        case 1 : $NoIdJabatan = "J00".$num; break;
+        case 2 : $NoIdJabatan = "J0".$num; break;
+        default: $NoIdJabatan = $num;
+    }
+    return $NoIdJabatan;
+}
+echo IdJabatanAkademik(autoIdjabatanakademik());
+?>
+
+<?php
+function autoIdJabatanakademik()
+{
+    global $db;
+    $querycount="SELECT count(kode_jabatanakademik) as LastID FROM jabatan_akademik";
+    $result=$db->query($querycount) or die($db->error());
+    $row=$result->fetch_assoc();
+    return $row['LastID'];
+}
+
+function IdJabatanAkademik($num) {
+    $num=$num+1; switch (strlen($num))
+    {
+        case 1 : $NoIdJabatanAkademik = "JA00".$num; break;
+        case 2 : $NoIdJabatanAkademik = "JA0".$num; break;
+        default: $NoIdJabatanAkademik = $num;
+    }
+    return $NoIdJabatanAkademik;
+}
+echo IdJabatan(autoIdjabatanakademik());
+?>

@@ -97,7 +97,7 @@ if( !isset($_SESSION["nama"]) ){
                 
                           <h4>Attribute Pegawai</h4>
         <div class="row">
-            <ul class="collapsible" data-collapsible="expandable">
+            <ul class="collapsible popout" data-collapsible="accordion">
             <li>
               <div class="collapsible-header"><i class="material-icons">face</i>Tipe Pegawai</div>
               <div class="collapsible-body"><p>Menu untuk menambah tipe pegawai baru<br>

@@ -80,7 +80,7 @@ $(document).ready(function() {
                 
                 <h4>Attribute Pegawai</h4>
         <div class="row">
-            <ul class="collapsible" data-collapsible="expandable">
+            <ul class="collapsible popout" data-collapsible="accordion">
             <li>
         <div class="collapsible-header"><i class="material-icons">face</i>Tambah tipe data pegawai</div>
         <div class="collapsible-body">
@@ -179,9 +179,6 @@ $(document).ready(function() {
         <tbody>
             <?php
             require_once "connect.php";
-            $limit = 2;
-            if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };
-            $start_from = ($page-1) * $limit;
 
             $sql = "SELECT * FROM unit ";
             $result = mysqli_query($db, $sql);
@@ -207,8 +204,59 @@ $(document).ready(function() {
             </li>
             <li>
               <div class="collapsible-header"><i class="material-icons">whatshot</i>Status Pegawai</div>
-              <div class="collapsible-body"><p>Menu untuk menambah status pegawai baru<br>
-                    <button type="button" class="btn modal-trigger" href="#modal5">Tambah</button>&nbsp;&nbsp;<button type="button" class="btn modal-trigger" href="#modal6">Lihat</button></p>
+              <div class="collapsible-body">
+                      <div class="container">
+                  <p>Menu menambah status pegawai baru.</p>
+                  <form class="col s12" method="post" action="tambah_statuspegawai.php">
+                      <div class="row">
+                          <div class="input-field col s12">
+                              <i class="material-icons prefix">note_add</i>
+                              <input name="status_pegawai" id="status_pegawai" type="text" class="validate" required >
+                              <label for="status_pegawai">Status Pegawai</label>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button class="btn waves-effect waves-light right" type="submit"><i class="material-icons right">add</i>Tambah</button>
+                      </div>
+                  </form>
+
+                  <h4>Data Unit Pegawai</h4>
+                  <div class="row">
+                      <form class="col s12">
+                          <div class="row">
+                              <div class="col s12">
+                                  <table class="highlight centered">
+                                      <thead>
+                                      <tr>
+                                          <th data-field="kode_statuspegawai">Kode Status Pegawai</th>
+                                          <th data-field="keterangan">Keterangan Status</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                      <?php
+                                      require_once "connect.php";
+
+                                      $sql = "SELECT * FROM status_pegawai ";
+                                      $result = mysqli_query($db, $sql);
+                                      if (mysqli_num_rows($result) > 0) {
+                                          // output data of each row
+                                          while($row = mysqli_fetch_assoc($result)) {
+                                              echo "<tr>
+                    <td>".@$row['kode_statuspegawai']."</td>
+                    <td>".@$row['keterangan']."</td>
+                    </tr>";
+                                          }
+                                      } else {
+                                          echo "Data Kosong";
+                                      }
+                                      ?>
+
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </form>
+
                 </div>
             </li>
                  <li>
@@ -225,6 +273,122 @@ $(document).ready(function() {
                     <button type="button" class="btn" href="tambah_internal.php">Tambah</button>&nbsp;&nbsp;<button type="button" class="btn" href="lihat_internal.php">Lihat</button></p>
                 </div>
             </li>
+               
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Jabatan Pegawai</div>
+                    <div class="collapsible-body">
+                        <div class="container">
+                            <p>Menu menambah jabatan pegawai baru.</p>
+                            <form class="col s12" method="post" action="tambah_jabatan.php">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">note_add</i>
+                                        <input name="jabatan_pegawai" id="jabatan_pegawai" type="text" class="validate" required >
+                                        <label for="jabatan_pegawai">jabatan Pegawai</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn waves-effect waves-light right" type="submit"><i class="material-icons right">add</i>Tambah</button>
+                                </div>
+                            </form>
+
+                            <h4>Data Jabatan Pegawai</h4>
+                            <div class="row">
+                                <form class="col s12">
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <table class="highlight centered">
+                                                <thead>
+                                                <tr>
+                                                    <th data-field="kode_jabatan">Kode Jabatan</th>
+                                                    <th data-field="keterangan">Keterangan Jabatan</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php
+                                                require_once "connect.php";
+
+                                                $sql = "SELECT * FROM jabatan ";
+                                                $result = mysqli_query($db, $sql);
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while($row = mysqli_fetch_assoc($result)) {
+                                                        echo "<tr>
+                    <td>".@$row['kode_jabatan']."</td>
+                    <td>".@$row['keterangan']."</td>
+                    </tr>";
+                                                    }
+                                                } else {
+                                                    echo "Data Kosong";
+                                                }
+                                                ?>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                </li>
+
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">whatshot</i>Jabatan Akademik Pegawai</div>
+                    <div class="collapsible-body">
+                        <div class="container">
+                            <p>Menu menambah jabatan Akademik pegawai baru.</p>
+                            <form class="col s12" method="post" action="tambah_jabatanakademik.php">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">note_add</i>
+                                        <input name="jabatan_akademik_pegawai" id="jabatan_akademik_pegawai" type="text" class="validate" required >
+                                        <label for="jabatan_akademik_pegawai">jabatan Akademik Pegawai</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn waves-effect waves-light right" type="submit"><i class="material-icons right">add</i>Tambah</button>
+                                </div>
+                            </form>
+
+                            <h4>Data Jabatan Akademik Pegawai</h4>
+                            <div class="row">
+                                <form class="col s12">
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <table class="highlight centered">
+                                                <thead>
+                                                <tr>
+                                                    <th data-field="kode_jabatanakademik">Kode Jabatan Akademik</th>
+                                                    <th data-field="keterangan">Keterangan Jabatan</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php
+                                                require_once "connect.php";
+
+                                                $sql = "SELECT * FROM jabatan_akademik ";
+                                                $result = mysqli_query($db, $sql);
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while($row = mysqli_fetch_assoc($result)) {
+                                                        echo "<tr>
+                    <td>".@$row['kode_jabatanakademik']."</td>
+                    <td>".@$row['keterangan']."</td>
+                    </tr>";
+                                                    }
+                                                } else {
+                                                    echo "Data Kosong";
+                                                }
+                                                ?>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                </li>
             </ul>
         </div>    
             </div>
