@@ -178,54 +178,24 @@ $(document).ready(function() {
         </thead>
         <tbody>
             <?php
-                require_once "connect.php";
-                $rec_limit = 10;
-                $sql = "SELECT count(kode_unit) FROM unit ";
-                $retval = mysql_query( $sql, $db );
-         
-         if(! $retval ) {
-            die('Could not get data: ' . mysql_error());
-         }
-         $row = mysql_fetch_array($retval, MYSQL_NUM );
-         $rec_count = $row[0];
-         
-         if( isset($_GET{'page'} ) ) {
-            $page = $_GET{'page'} + 1;
-            $offset = $rec_limit * $page ;
-         }else {
-            $page = 0;
-            $offset = 0;
-         }
-         
-         $left_rec = $rec_count - ($page * $rec_limit);
-         $sql = "SELECT * ". 
-            "FROM unit ".
-            "LIMIT $offset, $rec_limit";
-            
-         $retval = mysql_query( $sql, $conn );
-         
-         if(! $retval ) {
-            die('Could not get data: ' . mysql_error());
-         }
-         
-         while($row = mysql_fetch_array($retval, MYSQL_ASSOC)) {
-            echo "Kode Unit :{$row['kode_unit']}  <br> ".
-                  "EMP SALARY : {$row['keterangan']} <br> ".
-               "--------------------------------<br>";
-         }
-         
-         if( $page > 0 ) {
-            $last = $page - 2;
-            echo "<a href = \"$_PHP_SELF?page = $last\">Last 10 Records</a> |";
-            echo "<a href = \"$_PHP_SELF?page = $page\">Next 10 Records</a>";
-         }else if( $page == 0 ) {
-            echo "<a href = \"$_PHP_SELF?page = $page\">Next 10 Records</a>";
-         }else if( $left_rec < $rec_limit ) {
-            $last = $page - 2;
-            echo "<a href = \"$_PHP_SELF?page = $last\">Last 10 Records</a>";
-         }
-         
-         mysql_close($conn);
+            require_once "connect.php";
+            $limit = 2;
+            if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };
+            $start_from = ($page-1) * $limit;
+
+            $sql = "SELECT * FROM unit ";
+            $result = mysqli_query($db, $sql);
+            if (mysqli_num_rows($result) > 0) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>
+                    <td>".@$row['kode_unit']."</td>
+                    <td>".@$row['keterangan']."</td>
+                    </tr>";
+                }
+            } else {
+                echo "Data Kosong";
+            }
       ?>
           
         </tbody>
@@ -234,8 +204,6 @@ $(document).ready(function() {
             </div>
         </form>
         </div>
-                  </div>
-                </div>
             </li>
             <li>
               <div class="collapsible-header"><i class="material-icons">whatshot</i>Status Pegawai</div>
