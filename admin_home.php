@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Created by PhpStorm.
@@ -5,11 +6,8 @@
  * Date: 1/14/2016
  * Time: 11:09 PM
  */
-session_start();        
-if( !isset($_SESSION["nama"]) ){
-    header("location:index.php");
-    exit();
-}
+ob_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,13 +17,10 @@ if( !isset($_SESSION["nama"]) ){
 
     <title>Histori Pegawai</title>
 
-    
-
-
     <!-- CSS  -->
-   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="font/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="css/font-awesome.min.css" rel="stylesheet"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script src="js/sweetalert-min.js"></script>
     <link rel="stylesheet" href="css/sweetalert.css">
@@ -35,6 +30,13 @@ if( !isset($_SESSION["nama"]) ){
 
 </head>
 <body>
+<?php
+session_start();
+if( !isset($_SESSION["nama"]) ){
+header("location:index.php");
+exit();
+}
+?>
 <nav class="white" role="navigation">
     <div class="nav-wrapper container">
         

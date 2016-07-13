@@ -1,3 +1,6 @@
+<?php
+ob_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +12,7 @@
 <body>
 
     <?php
-    /**
-     * Created by PhpStorm.
-     * User: LUK
-     * Date: 7/2/2016
-     * Time: 12:31 PM
-     */
+
         require_once "connect.php";
         require_once "function.php";
         $username = $_POST["user"];
